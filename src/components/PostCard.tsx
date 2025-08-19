@@ -5,7 +5,11 @@ import {
   ChatBubbleOvalLeftIcon,
 } from "@heroicons/react/24/outline";
 
-export default function PostCard() {
+export default function PostCard({
+  showCommentsIcon = true,
+}: {
+  showCommentsIcon?: boolean;
+}) {
   return (
     <div className="flex flex-col w-full p-3.5">
       <div className="w-full flex items-center gap-2.5 py-2">
@@ -25,7 +29,9 @@ export default function PostCard() {
       <div className="flex items-center justify-evenly">
         <HandThumbUpIcon className="size-6" />
         <HandThumbDownIcon className="size-6" />
-        <ChatBubbleOvalLeftIcon className="size-6" />
+        {showCommentsIcon ? (
+          <ChatBubbleOvalLeftIcon className="size-6" />
+        ) : null}
       </div>
     </div>
   );

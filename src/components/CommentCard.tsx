@@ -6,7 +6,7 @@ import {
 
 export default function CommentCard() {
   return (
-    <div className="flex w-full gap-2.5">
+    <div className="flex w-full gap-2.5 py-2">
       <UserCircleIcon className="size-8" />
       <div className="w-full space-y-1">
         <div className="bg-slate-100 p-2.5 rounded-sm">
