@@ -4,12 +4,15 @@ import {
   HandThumbDownIcon,
   ChatBubbleOvalLeftIcon,
 } from "@heroicons/react/24/outline";
+import { Link } from "react-router";
 
 export default function PostCard({
+  id,
   title,
   content,
   showCommentsIcon = true,
 }: {
+  id: string;
   title: string;
   content: string;
   showCommentsIcon?: boolean;
@@ -27,7 +30,9 @@ export default function PostCard({
         <HandThumbUpIcon className="size-6" />
         <HandThumbDownIcon className="size-6" />
         {showCommentsIcon ? (
-          <ChatBubbleOvalLeftIcon className="size-6" />
+          <Link to={`/post/${id}`}>
+            <ChatBubbleOvalLeftIcon className="size-6" />
+          </Link>
         ) : null}
       </div>
     </div>

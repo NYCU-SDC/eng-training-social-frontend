@@ -2,7 +2,7 @@ import { type Comment } from "@/types/types.ts";
 
 export async function getCommentsByPostId(id: string): Promise<Comment[]> {
   const res = await fetch(
-    `${import.meta.env.VITE_BACKEND_BASE_URL}/api/posts/${id}/comments`,
+    `${import.meta.env.VITE_BACKEND_BASE_URL}/api/post/${id}/comments`,
     {
       method: "GET",
     },
