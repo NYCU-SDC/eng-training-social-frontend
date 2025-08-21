@@ -20,9 +20,9 @@ export default function PostCard({
         <UserCircleIcon className="size-8" />
         <p className="text-sm">John Doe</p>
       </div>
-      <h1 className="text-base font-semibold">{title}</h1>
+      <h1 className="text-base font-semibold wrap-break-word">{title}</h1>
       {/**/}
-      <p className="text-sm">{content}</p>
+      <p className="text-sm wrap-break-word">{content}</p>
       <div className="flex items-center justify-evenly">
         <HandThumbUpIcon className="size-6" />
         <HandThumbDownIcon className="size-6" />
