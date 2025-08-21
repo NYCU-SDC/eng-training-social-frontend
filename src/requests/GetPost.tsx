@@ -1,8 +1,8 @@
-import { type Post } from "@/types/types.ts";
+import type { Post } from "@/types/types.ts";
 
-export async function getPosts(): Promise<Post[]> {
+export async function getPost(postId: string): Promise<Post> {
   const res = await fetch(
-    `${import.meta.env.VITE_BACKEND_BASE_URL}/api/posts`,
+    `${import.meta.env.VITE_BACKEND_BASE_URL}/api/posts/${postId}`,
     {
       method: "GET",
     },
@@ -10,7 +10,7 @@ export async function getPosts(): Promise<Post[]> {
 
   if (!res.ok) {
     let errorStatus = res.status;
-    let errorMessage = `failed to fetch posts (${res.status})`;
+    let errorMessage = `failed to fetch post (${res.status})`;
 
     try {
       const error = await res.json();
@@ -19,7 +19,7 @@ export async function getPosts(): Promise<Post[]> {
     } catch {
       // ignore
     }
-    console.error("[getPosts] Error:", errorMessage);
+    console.error("[getPost] Error:", errorMessage);
     const err = new Error(errorMessage);
     err.name = errorStatus.toString();
     throw err;
