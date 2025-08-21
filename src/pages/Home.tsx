@@ -3,9 +3,16 @@ import Navigation from "@/components/Navigation";
 import Button from "@/components/Button.tsx";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router";
+import { getPosts } from "@/requests/GetPosts.tsx";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Home() {
   const navigate = useNavigate();
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["posts"],
+    queryFn: getPosts,
+  });
 
   return (
     <div className="py-8 h-screen flex flex-col">
@@ -20,11 +27,15 @@ export default function Home() {
           </Button>
         </div>
         <div className="flex flex-col">
-          <PostCard />
-          <PostCard />
-          <PostCard />
-          <PostCard />
-          <PostCard />
+          {isLoading
+            ? "is loading"
+            : data?.map((post) => (
+                <PostCard
+                  key={post.id}
+                  title={post.title}
+                  content={post.content}
+                />
+              ))}
         </div>
       </div>
       <div className="w-full bg-white">

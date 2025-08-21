@@ -6,8 +6,12 @@ import {
 } from "@heroicons/react/24/outline";
 
 export default function PostCard({
+  title,
+  content,
   showCommentsIcon = true,
 }: {
+  title: string;
+  content: string;
   showCommentsIcon?: boolean;
 }) {
   return (
@@ -16,16 +20,9 @@ export default function PostCard({
         <UserCircleIcon className="size-8" />
         <p className="text-sm">John Doe</p>
       </div>
-      <h1 className="text-base font-semibold">
-        Lorem ipsum dolor sit amet consectetur.
-      </h1>
+      <h1 className="text-base font-semibold">{title}</h1>
       {/**/}
-      <p className="text-sm">
-        Lorem ipsum dolor sit amet consectetur. Bibendum adipiscing metus dolor
-        diam in risus ut. Quis nam elit placerat egestas tellus rhoncus.
-        Facilisis pretium et nunc metus urna nisi a. Molestie consequat ornare
-        ac volutpat velit condimentum quis pellentesque.
-      </p>
+      <p className="text-sm">{content}</p>
       <div className="flex items-center justify-evenly">
         <HandThumbUpIcon className="size-6" />
         <HandThumbDownIcon className="size-6" />
