@@ -17,13 +17,13 @@ export default function Post() {
   const { id } = useParams();
 
   // get post by id
-  const { data: post } = useQuery({
+  const { data: post, isLoading: isPostLoading } = useQuery({
     queryKey: ["post", id],
     queryFn: () => getPost(id!),
   });
 
   // get comments by post id
-  const { data: comments } = useQuery({
+  const { data: comments, isLoading: isCommentsLoading } = useQuery({
     queryKey: ["comments", id],
     queryFn: () => getCommentsByPostId(id!),
   });
@@ -52,16 +52,29 @@ export default function Post() {
         className="size-6 mt-5 ml-2"
         onClick={() => navigate("/")}
       />
-      <PostCard
-        title={post.title}
-        content={post.content}
-        showCommentsIcon={false}
-      />
+      {isPostLoading ? (
+        <div className="flex justify-center items-center h-full">
+          <p>Loading post...</p>
+        </div>
+      ) : (
+        <PostCard
+          id={post.id}
+          title={post.title}
+          content={post.content}
+          showCommentsIcon={false}
+        />
+      )}
       <hr />
       <div className="h-full overflow-y-auto px-2.5">
-        {comments.map((comment) => (
-          <CommentCard key={comment.id} content={comment.content} />
-        ))}
+        {isCommentsLoading ? (
+          <div className="flex justify-center items-center h-full">
+            <p>Loading comments...</p>
+          </div>
+        ) : (
+          comments.map((comment) => (
+            <CommentCard key={comment.id} content={comment.content} />
+          ))
+        )}
       </div>
       <div className="flex justify-center items-end pb-8 gap-5 px-5">
         <textarea

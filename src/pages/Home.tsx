@@ -27,16 +27,20 @@ export default function Home() {
           </Button>
         </div>
         <div className="flex flex-col">
-          {isLoading
-            ? "is loading"
-            : data?.map((post) => (
-                <PostCard
-                  key={post.id}
-                  id={post.id}
-                  title={post.title}
-                  content={post.content}
-                />
-              ))}
+          {isLoading ? (
+            <div className="flex justify-center items-center h-full">
+              <p>Loading...</p>
+            </div>
+          ) : (
+            data?.map((post) => (
+              <PostCard
+                key={post.id}
+                id={post.id}
+                title={post.title}
+                content={post.content}
+              />
+            ))
+          )}
         </div>
       </div>
       <div className="w-full bg-white">
