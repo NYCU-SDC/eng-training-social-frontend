@@ -11,7 +11,7 @@ export default function CommentCard() {
       <div className="w-full space-y-1">
         <div className="bg-slate-100 p-2.5 rounded-sm">
           <p className="text-sm font-semibold">John Doe</p>
-          <p className="text-sm">
+          <p className="text-sm wrap-break-word">
             Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet
             consectetur. Bibendum adipiscing metus dolor diam in risus ut. Quis
             nam elit placerat egestas tellus.
