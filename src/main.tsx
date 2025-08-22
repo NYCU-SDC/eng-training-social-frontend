@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "@/components/AuthProvider.tsx";
 import "./index.css";
 import App from "./App.tsx";
+import { CookiesProvider } from "react-cookie";
 
 const queryClient = new QueryClient();
 
@@ -12,9 +13,11 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <AuthProvider>
-          <App />
-        </AuthProvider>
+        <CookiesProvider>
+          <AuthProvider>
+            <App />
+          </AuthProvider>
+        </CookiesProvider>
       </BrowserRouter>
     </QueryClientProvider>
   </StrictMode>,

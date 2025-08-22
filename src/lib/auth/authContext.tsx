@@ -2,7 +2,7 @@ import { createContext } from "react";
 import { type AuthCookie } from "@/types/types";
 
 type AuthContextType = {
-  login: (provider: "google" | "nycu") => void;
+  login: () => void;
   setCookiesForAuthToken: (data: AuthCookie) => void;
   logout: () => void;
   isLoggedIn: () => boolean;
