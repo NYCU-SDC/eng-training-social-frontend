@@ -61,6 +61,8 @@ export default function Post() {
           id={post.id}
           title={post.title}
           content={post.content}
+          authorName={post.authorName}
+          authorID={post.authorId}
           showCommentsIcon={false}
         />
       )}
@@ -72,7 +74,12 @@ export default function Post() {
           </div>
         ) : (
           comments.map((comment) => (
-            <CommentCard key={comment.id} content={comment.content} />
+            <CommentCard
+              key={comment.id}
+              content={comment.content}
+              authorName={comment.authorName}
+              authorId={comment.authorId}
+            />
           ))
         )}
       </div>

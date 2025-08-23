@@ -38,6 +38,8 @@ export default function Home() {
                 id={post.id}
                 title={post.title}
                 content={post.content}
+                authorName={post.authorName}
+                authorID={post.authorId}
               />
             ))
           )}

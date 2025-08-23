@@ -17,6 +17,17 @@ export type Comment = {
   updatedAt: string;
 };
 
+export type User = {
+  id: string;
+  username: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+  followMe: {
+    follow: boolean;
+  };
+};
+
 export type AccessToken = {
   ID: string;
   FullName: string;
