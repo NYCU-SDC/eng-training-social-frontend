@@ -1,13 +1,13 @@
 import { type User } from "@/types/types.ts";
 
-export async function getUserById(
-  userId: string,
+export async function unfollowUserById(
+  id: string,
   accessToken: string,
 ): Promise<User> {
   const res = await fetch(
-    `${import.meta.env.VITE_BACKEND_BASE_URL}/api/user/${userId}`,
+    `${import.meta.env.VITE_API_URL}/user/${id}/unfollow`,
     {
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
@@ -17,7 +17,7 @@ export async function getUserById(
 
   if (!res.ok) {
     let errorStatus = res.status;
-    let errorMessage = `failed to fetch user information (${res.status})`;
+    let errorMessage = `failed to unfollow user (${res.status})`;
 
     try {
       const error = await res.json();
@@ -26,7 +26,7 @@ export async function getUserById(
     } catch {
       // ignore
     }
-    console.error("[getUserById] Error:", errorMessage);
+    console.error("[unfollowUserById] Error:", errorMessage);
     const err = new Error(errorMessage);
     err.name = errorStatus.toString();
     throw err;

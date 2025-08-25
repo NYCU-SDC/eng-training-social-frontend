@@ -5,6 +5,9 @@ export async function getPosts(): Promise<Post[]> {
     `${import.meta.env.VITE_BACKEND_BASE_URL}/api/posts`,
     {
       method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
     },
   );
 
