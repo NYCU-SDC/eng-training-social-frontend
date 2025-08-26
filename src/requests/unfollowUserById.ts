@@ -5,7 +5,7 @@ export async function unfollowUserById(
   accessToken: string,
 ): Promise<User> {
   const res = await fetch(
-    `${import.meta.env.VITE_API_URL}/user/${id}/unfollow`,
+    `${import.meta.env.VITE_BACKEND_BASE_URL}/user/${id}/unfollow`,
     {
       method: "POST",
       headers: {
