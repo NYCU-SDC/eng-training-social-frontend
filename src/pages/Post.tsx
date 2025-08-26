@@ -8,8 +8,8 @@ import {
 import { useNavigate } from "react-router";
 import { useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
-import { getPost } from "@/requests/GetPost.ts";
-import { getCommentsByPostId } from "@/requests/GetCommentsByPost.ts";
+import { getPost } from "@/requests/getPost.ts";
+import { getCommentsByPostId } from "@/requests/getCommentsByPost.ts";
 
 export default function Post() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);

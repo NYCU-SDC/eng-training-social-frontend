@@ -3,7 +3,7 @@ import Navigation from "@/components/Navigation";
 import Button from "@/components/Button.tsx";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router";
-import { getPosts } from "@/requests/GetPosts.ts";
+import { getPosts } from "@/requests/getPosts.tsx";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Home() {
