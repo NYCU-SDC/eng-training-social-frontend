@@ -1,3 +1,11 @@
+export const Reaction = {
+  LIKE: "LIKE",
+  DISLIKE: "DISLIKE",
+  NONE: "NONE",
+} as const;
+
+export type Reaction = (typeof Reaction)[keyof typeof Reaction];
+
 export type Post = {
   id: string;
   title: string;
@@ -6,6 +14,9 @@ export type Post = {
   authorName: string;
   createdAt: string;
   updatedAt: string;
+  reactionMe: {
+    reaction: Reaction;
+  };
 };
 
 export type Comment = {
@@ -15,6 +26,9 @@ export type Comment = {
   authorName: string;
   createdAt: string;
   updatedAt: string;
+  reactionMe: {
+    reaction: Reaction;
+  };
 };
 
 export type User = {

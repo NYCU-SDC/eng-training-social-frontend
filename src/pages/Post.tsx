@@ -22,13 +22,13 @@ export default function Post() {
   // get post by id
   const { data: post, isLoading: isPostLoading } = useQuery({
     queryKey: ["post", id],
-    queryFn: () => getPost(id!),
+    queryFn: () => getPost(id!, cookies.accessToken),
   });
 
   // get comments by post id
   const { data: comments, isLoading: isCommentsLoading } = useQuery({
     queryKey: ["comments", id],
-    queryFn: () => getCommentsByPostId(id!),
+    queryFn: () => getCommentsByPostId(id!, cookies.accessToken),
   });
 
   const { mutate: createCommentMutation, isPending: isCreatingComment } =
@@ -83,6 +83,7 @@ export default function Post() {
           authorName={post.authorName}
           authorID={post.authorId}
           showCommentsIcon={false}
+          reaction={post.reactionMe.reaction}
         />
       )}
       <hr />
@@ -95,9 +96,11 @@ export default function Post() {
           comments.map((comment) => (
             <CommentCard
               key={comment.id}
+              id={comment.id}
               content={comment.content}
               authorName={comment.authorName}
               authorId={comment.authorId}
+              reaction={comment.reactionMe.reaction}
             />
           ))
         )}

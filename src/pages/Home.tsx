@@ -5,13 +5,15 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import { useNavigate } from "react-router";
 import { getPosts } from "@/requests/getPosts.ts";
 import { useQuery } from "@tanstack/react-query";
+import { useCookies } from "react-cookie";
 
 export default function Home() {
   const navigate = useNavigate();
+  const [cookies] = useCookies(["accessToken"]);
 
   const { data, isLoading } = useQuery({
     queryKey: ["posts"],
-    queryFn: getPosts,
+    queryFn: () => getPosts(cookies.accessToken),
   });
 
   return (
@@ -40,6 +42,7 @@ export default function Home() {
                 content={post.content}
                 authorName={post.authorName}
                 authorID={post.authorId}
+                reaction={post.reactionMe.reaction}
               />
             ))
           )}

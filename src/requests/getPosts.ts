@@ -1,10 +1,14 @@
 import { type Post } from "@/types/types.ts";
 
-export async function getPosts(): Promise<Post[]> {
+export async function getPosts(accessToken?: string): Promise<Post[]> {
   const res = await fetch(
     `${import.meta.env.VITE_BACKEND_BASE_URL}/api/posts`,
     {
       method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+      },
     },
   );
 

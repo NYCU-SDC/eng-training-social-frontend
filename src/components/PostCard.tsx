@@ -1,10 +1,19 @@
 import {
   UserCircleIcon,
-  HandThumbUpIcon,
-  HandThumbDownIcon,
+  HandThumbUpIcon as HandThumbUpOutline,
+  HandThumbDownIcon as HandThumbDownOutline,
   ChatBubbleOvalLeftIcon,
 } from "@heroicons/react/24/outline";
+import {
+  HandThumbUpIcon as HandThumbUpSolid,
+  HandThumbDownIcon as HandThumbDownSolid,
+} from "@heroicons/react/24/solid";
 import { Link } from "react-router";
+import { Reaction } from "@/types/types.ts";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { reactToPost } from "@/requests/reactToPost.ts";
+import { useCookies } from "react-cookie";
+import { useState } from "react";
 
 export default function PostCard({
   id,
@@ -13,6 +22,7 @@ export default function PostCard({
   authorName,
   authorID,
   showCommentsIcon = true,
+  reaction,
 }: {
   id: string;
   title: string;
@@ -20,7 +30,25 @@ export default function PostCard({
   authorName: string;
   authorID: string;
   showCommentsIcon?: boolean;
+  reaction: Reaction;
 }) {
+  const [reactionState, setReactionState] = useState<Reaction>(reaction);
+  const [cookies] = useCookies(["accessToken"]);
+  const queryClient = useQueryClient();
+
+  const { mutate: reactToPostMutation, reset: resetMutation } = useMutation({
+    mutationFn: (newReaction: Reaction) =>
+      reactToPost(newReaction, id, cookies.accessToken),
+    onMutate: () => {
+      resetMutation();
+    },
+    onSuccess: async (data) => {
+      setReactionState(data.reaction);
+      await queryClient.invalidateQueries({ queryKey: ["posts"] });
+      await queryClient.invalidateQueries({ queryKey: ["post", id] });
+    },
+  });
+
   return (
     <div className="flex flex-col w-full p-3.5">
       <div className="py-2 flex">
@@ -33,8 +61,28 @@ export default function PostCard({
       {/**/}
       <p className="text-sm wrap-break-word">{content}</p>
       <div className="flex items-center justify-evenly">
-        <HandThumbUpIcon className="size-6" />
-        <HandThumbDownIcon className="size-6" />
+        {reactionState === Reaction.LIKE ? (
+          <HandThumbUpSolid
+            onClick={() => reactToPostMutation(Reaction.NONE)}
+            className="size-6"
+          />
+        ) : (
+          <HandThumbUpOutline
+            onClick={() => reactToPostMutation(Reaction.LIKE)}
+            className="size-6"
+          />
+        )}
+        {reactionState === Reaction.DISLIKE ? (
+          <HandThumbDownSolid
+            onClick={() => reactToPostMutation(Reaction.NONE)}
+            className="size-6"
+          />
+        ) : (
+          <HandThumbDownOutline
+            onClick={() => reactToPostMutation(Reaction.DISLIKE)}
+            className="size-6"
+          />
+        )}
         {showCommentsIcon ? (
           <Link to={`/post/${id}`}>
             <ChatBubbleOvalLeftIcon className="size-6" />
