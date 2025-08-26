@@ -4,13 +4,16 @@ export async function followUserById(
   id: string,
   accessToken: string,
 ): Promise<User> {
-  const res = await fetch(`${import.meta.env.VITE_API_URL}/user/${id}/follow`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
+  const res = await fetch(
+    `${import.meta.env.VITE_BACKEND_BASE_URL}/user/${id}/follow`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
     },
-  });
+  );
 
   if (!res.ok) {
     let errorStatus = res.status;
