@@ -4,9 +4,9 @@ import { useMutation } from "@tanstack/react-query";
 import { useCookies } from "react-cookie";
 import { jwtDecode } from "jwt-decode";
 import type { AccessToken, AuthCookie } from "@/types/types";
-import { refreshAccessToken } from "@/requests/RefreshAccessToken.ts";
+import { refreshAccessToken } from "@/requests/refreshAccessToken.ts";
 import { authContext } from "@/lib/auth/authContext.tsx";
-import { logout as logoutRequest } from "@/requests/Logout";
+import { logout as logoutRequest } from "@/requests/logout.ts";
 
 let refreshTimer: number;
 
