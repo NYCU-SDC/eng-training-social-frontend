@@ -9,8 +9,8 @@ import { useNavigate } from "react-router";
 import { useParams } from "react-router";
 import { useQuery, useMutation, QueryClient } from "@tanstack/react-query";
 import { useCookies } from "react-cookie";
-import { getPost } from "@/requests/GetPost.ts";
-import { getCommentsByPostId } from "@/requests/GetCommentsByPost.ts";
+import { getPost } from "@/requests/getPost.ts";
+import { getCommentsByPostId } from "@/requests/getCommentsByPost.ts";
 import { createComment } from "@/requests/createComment.ts";
 
 export default function Post() {

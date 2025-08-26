@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import { ChevronLeftIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import Button from "@/components/Button.tsx";
 import Navigation from "@/components/Navigation.tsx";
-import { getUserById } from "@/requests/GetUserById.ts";
+import { getUserById } from "@/requests/getUserById.ts";
 import { followUserById } from "@/requests/followUserById.ts";
 import { unfollowUserById } from "@/requests/unfollowUserById.ts";
 import { useQuery, useMutation } from "@tanstack/react-query";
