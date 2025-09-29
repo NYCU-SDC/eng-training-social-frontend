@@ -1,0 +1,11 @@
+.navigation-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding-inline: 12px;
+    padding-block: 8px;
+}
+
+.icon {
+    width: 32px;
+}
