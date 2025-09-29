@@ -17,3 +17,25 @@
     line-height: 24px;
     overflow-wrap: break-word;
 }
+
+.user-info {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-block: 8px;
+}
+
+.icon {
+    width: 32px;
+}
+
+.reaction-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.reaction-icon {
+    width: 24px;
+}
