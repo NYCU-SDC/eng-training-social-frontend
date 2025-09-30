@@ -1,0 +1,11 @@
+.button-outline {
+    padding: 4px 8px;
+    border-radius: 8px;
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+}

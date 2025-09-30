@@ -4,3 +4,11 @@
   box-sizing: border-box;
   font-family: sans-serif;
 }
+
+.md-icon {
+  width: 24px;
+}
+
+.lg-icon {
+  width: 32px;
+}

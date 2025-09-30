@@ -3,6 +3,8 @@
     flex-direction: column;
     width: 100%;
     padding: 16px;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
 }
 
 .card-text {
@@ -26,16 +28,8 @@
     padding-block: 8px;
 }
 
-.icon {
-    width: 32px;
-}
-
 .reaction-container {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-}
-
-.reaction-icon {
-    width: 24px;
 }

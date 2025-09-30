@@ -19,19 +19,19 @@ export default function Navigation({
   return (
     <div className="navigation-container">
       {page == "home" ? (
-        <HomeIconSolid className="icon" />
+        <HomeIconSolid className="lg-icon" />
       ) : (
-        <HomeIconOutline className="icon" />
+        <HomeIconOutline className="lg-icon" />
       )}
       {page == "notifications" ? (
-        <BellIconSolid className="icon" />
+        <BellIconSolid className="lg-icon" />
       ) : (
-        <BellIconOutline className="icon" />
+        <BellIconOutline className="lg-icon" />
       )}
       {page == "account" ? (
-        <UserCircleSolid className="icon" />
+        <UserCircleSolid className="lg-icon" />
       ) : (
-        <UserCircleOutline className="icon" />
+        <UserCircleOutline className="lg-icon" />
       )}
     </div>
   );

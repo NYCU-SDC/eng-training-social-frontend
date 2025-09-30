@@ -10,7 +10,7 @@ export default function PostCard() {
   return (
     <div className="card-container">
       <div className="user-info">
-        <UserCircleIcon className="icon" />
+        <UserCircleIcon className="lg-icon" />
         <p>John Doe</p>
       </div>
       <h1 className="card-title">Lorem ipsum dolor sit amet consectetur.</h1>
@@ -21,9 +21,9 @@ export default function PostCard() {
         ac volutpat velit condimentum quis pellentesque.
       </p>
       <div className="reaction-container">
-        <HandThumbUpIcon className="reaction-icon" />
-        <HandThumbDownIcon className="reaction-icon" />
-        <ChatBubbleOvalLeftIcon className="reaction-icon" />
+        <HandThumbUpIcon className="md-icon" />
+        <HandThumbDownIcon className="md-icon" />
+        <ChatBubbleOvalLeftIcon className="md-icon" />
       </div>
     </div>
   );

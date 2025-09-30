@@ -1,0 +1,27 @@
+.new-post-button {
+    width: 200px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.sticky-nav {
+    background-color: white;
+    position: sticky;
+    bottom: 0;
+}
+
+.content-scroll {
+    overflow-y: auto;
+    height: 100%;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
