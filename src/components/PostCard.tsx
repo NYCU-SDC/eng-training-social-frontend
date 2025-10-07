@@ -6,7 +6,11 @@ import {
   ChatBubbleOvalLeftIcon,
 } from "@heroicons/react/24/outline";
 
-export default function PostCard() {
+export default function PostCard({
+  showCommentsIcon = true,
+}: {
+  showCommentsIcon?: boolean;
+}) {
   return (
     <div className="card-container">
       <div className="user-info">
@@ -23,7 +27,7 @@ export default function PostCard() {
       <div className="reaction-container">
         <HandThumbUpIcon className="md-icon" />
         <HandThumbDownIcon className="md-icon" />
-        <ChatBubbleOvalLeftIcon className="md-icon" />
+        {showCommentsIcon && <ChatBubbleOvalLeftIcon className="md-icon" />}
       </div>
     </div>
   );
