@@ -1,0 +1,31 @@
+.main-container {
+    display: flex;
+}
+
+.back-icon {
+    margin-top: 20px;
+    margin-left: 8px;
+}
+
+.comment-container {
+    overflow-y: auto;
+    height: 100%;
+}
+
+.comment-input-container {
+    display: flex;
+    align-items: center;
+    padding-inline: 20px;
+    gap: 20px;
+}
+
+.comment-input {
+    border-width: 2px;
+    border-color: #62748e;
+    border-style: solid;
+    border-radius: 8px;
+    font-size: 16px;
+    padding-inline: 10px;
+    padding-block: 4px;
+    line-height: 20px;
+}
