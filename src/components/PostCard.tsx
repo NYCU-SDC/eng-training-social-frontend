@@ -6,6 +6,7 @@ import {
   ChatBubbleOvalLeftIcon,
 } from "@heroicons/react/24/outline";
 import { type Post } from "@/types/types";
+import { Link } from "react-router";
 
 export default function PostCard({
   post,
@@ -25,7 +26,11 @@ export default function PostCard({
       <div className="reaction-container">
         <HandThumbUpIcon className="md-icon" />
         <HandThumbDownIcon className="md-icon" />
-        {showCommentsIcon && <ChatBubbleOvalLeftIcon className="md-icon" />}
+        {showCommentsIcon && (
+          <Link to={`/post/${post.id}`}>
+            <ChatBubbleOvalLeftIcon className="md-icon" />
+          </Link>
+        )}
       </div>
     </div>
   );
