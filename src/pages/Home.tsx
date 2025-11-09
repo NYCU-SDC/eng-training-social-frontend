@@ -4,21 +4,20 @@ import Navigation from "@/components/Navigation.tsx";
 import Button from "@/components/Button.tsx";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router";
-import { useEffect, useState } from "react";
 import { getPosts } from "@/requests/getPosts";
-import type { Post } from "@/types/types";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Home() {
   const navigate = useNavigate();
-  const [posts, setPosts] = useState<Post[] | null>(null);
 
-  useEffect(() => {
-    async function fetchPosts() {
-      const data = await getPosts();
-      setPosts(data);
-    }
-    fetchPosts();
-  }, []);
+  const {
+    data: posts,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["posts"],
+    queryFn: getPosts,
+  });
 
   return (
     <div className="main-container">
@@ -32,10 +31,12 @@ export default function Home() {
             <p>New Post</p>
           </Button>
         </div>
-        {posts ? (
-          posts.map((post) => <PostCard key={post.id} post={post} />)
-        ) : (
+        {isLoading ? (
           <p>Loading posts...</p>
+        ) : isError ? (
+          <p>Error loading posts.</p>
+        ) : (
+          posts && posts.map((post) => <PostCard key={post.id} post={post} />)
         )}
       </div>
       <div className="sticky-nav">

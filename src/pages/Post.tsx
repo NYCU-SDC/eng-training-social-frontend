@@ -6,37 +6,34 @@ import {
   PaperAirplaneIcon,
 } from "@heroicons/react/24/outline";
 import { useNavigate, useParams } from "react-router";
-import { useEffect, useRef, useState } from "react";
-import type { Post, Comment } from "@/types/types";
+import { useRef } from "react";
 import { getPost } from "@/requests/getPost";
 import { getCommentsByPostId } from "@/requests/getCommentByPost";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Post() {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const [post, setPost] = useState<Post | null>(null);
-  const [comments, setComments] = useState<Comment[] | null>(null);
-
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  useEffect(() => {
-    async function fetchData() {
-      if (id) {
-        // Fetch Post
-        console.log("Fetching post with ID:", id);
-        const postData = await getPost(id);
-        console.log("Fetched post data:", postData);
-        setPost(postData);
+  const {
+    data: post,
+    isLoading: isPostLoading,
+    isError: isPostError,
+  } = useQuery({
+    queryKey: ["post", id],
+    queryFn: () => getPost(id!),
+  });
 
-        // Fetch Comments
-        const commentsData = await getCommentsByPostId(id);
-        console.log("Fetched comments data:", commentsData);
-        setComments(commentsData);
-      }
-    }
-    fetchData();
-  }, [id]);
+  const {
+    data: comments,
+    isLoading: isCommentsLoading,
+    isError: isCommentsError,
+  } = useQuery({
+    queryKey: ["comments", id],
+    queryFn: () => getCommentsByPostId(id!),
+  });
 
   const handleInput = () => {
     const textarea = textareaRef.current;
@@ -52,18 +49,23 @@ export default function Post() {
         className="md-icon back-icon"
         onClick={() => navigate("/")}
       />
-      {post ? (
-        <PostCard post={post} showCommentsIcon={false} />
-      ) : (
+      {isPostLoading ? (
         <p>Loading post...</p>
+      ) : isPostError ? (
+        <p>Error loading post.</p>
+      ) : (
+        post && <PostCard post={post} showCommentsIcon={false} />
       )}
       <div className="comment-container">
-        {comments ? (
+        {isCommentsLoading ? (
+          <p>Loading comments...</p>
+        ) : isCommentsError ? (
+          <p>Error loading comments.</p>
+        ) : (
+          comments &&
           comments.map((comment) => (
             <CommentCard key={comment.id} comment={comment} />
           ))
-        ) : (
-          <p>Loading comments...</p>
         )}
       </div>
       <div className="comment-input-container">
