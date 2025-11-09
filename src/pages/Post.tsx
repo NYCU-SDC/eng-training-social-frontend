@@ -5,13 +5,38 @@ import {
   ChevronLeftIcon,
   PaperAirplaneIcon,
 } from "@heroicons/react/24/outline";
-import { useNavigate } from "react-router";
-import { useRef } from "react";
+import { useNavigate, useParams } from "react-router";
+import { useEffect, useRef, useState } from "react";
+import type { Post, Comment } from "@/types/types";
+import { getPost } from "@/requests/getPost";
+import { getCommentsByPostId } from "@/requests/getCommentByPost";
 
 export default function Post() {
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  const [post, setPost] = useState<Post | null>(null);
+  const [comments, setComments] = useState<Comment[] | null>(null);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      if (id) {
+        // Fetch Post
+        console.log("Fetching post with ID:", id);
+        const postData = await getPost(id);
+        console.log("Fetched post data:", postData);
+        setPost(postData);
+
+        // Fetch Comments
+        const commentsData = await getCommentsByPostId(id);
+        console.log("Fetched comments data:", commentsData);
+        setComments(commentsData);
+      }
+    }
+    fetchData();
+  }, [id]);
 
   const handleInput = () => {
     const textarea = textareaRef.current;
@@ -27,13 +52,19 @@ export default function Post() {
         className="md-icon back-icon"
         onClick={() => navigate("/")}
       />
-      <PostCard showCommentsIcon={false} />
+      {post ? (
+        <PostCard post={post} showCommentsIcon={false} />
+      ) : (
+        <p>Loading post...</p>
+      )}
       <div className="comment-container">
-        <CommentCard />
-        <CommentCard />
-        <CommentCard />
-        <CommentCard />
-        <CommentCard />
+        {comments ? (
+          comments.map((comment) => (
+            <CommentCard key={comment.id} comment={comment} />
+          ))
+        ) : (
+          <p>Loading comments...</p>
+        )}
       </div>
       <div className="comment-input-container">
         <textarea
