@@ -11,7 +11,7 @@ export default function CommentCard() {
       <UserCircleIcon className="lg-icon" />
       <div className="comment-card-body">
         <div className="comment-card-text">
-          <p className="username">John Doe</p>
+          <p className="comment-card-username">John Doe</p>
           <p>
             Lorem ipsum dolor sit amet consectetur. Lorem ipsum dolor sit amet
             consectetur. Bibendum adipiscing metus dolor diam in risus ut. Quis
