@@ -3,9 +3,12 @@ import { useState } from "react";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import Button from "@/components/Button.tsx";
 import Navigation from "@/components/Navigation.tsx";
+import { useContext } from "react";
+import { authContext } from "@/lib/authContext.ts";
 
 export default function Account() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const { login } = useContext(authContext);
 
   return (
     <div className="main-container">
@@ -17,10 +20,7 @@ export default function Account() {
           <Button onClick={() => setIsLoggedIn((prev) => !prev)}>logout</Button>
         </div>
       ) : (
-        <Button
-          className="login-button"
-          onClick={() => setIsLoggedIn((prev) => !prev)}
-        >
+        <Button className="login-button" onClick={login}>
           login
         </Button>
       )}
