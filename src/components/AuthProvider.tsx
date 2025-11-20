@@ -35,6 +35,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   });
 
   useEffect(() => {
+    if (!cookie.token) return;
     const decodedToken: { exp: number } = jwtDecode(cookie.token);
     const expireTime = new Date(decodedToken.exp * 1000);
 
