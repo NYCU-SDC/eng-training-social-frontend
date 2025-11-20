@@ -4,6 +4,7 @@ import CreatePost from "@/pages/CreatePost.tsx";
 import Post from "@/pages/Post.tsx";
 import Account from "@/pages/Account.tsx";
 import UserProfile from "@/pages/UserProfile.tsx";
+import Callback from "@/pages/Callback.tsx";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route path="/post/:id" element={<Post />} />
       <Route path="/user/me" element={<Account />} />
       <Route path="/user/:id" element={<UserProfile />} />
+      <Route path="/callback" element={<Callback />} />
     </Routes>
   );
 }
