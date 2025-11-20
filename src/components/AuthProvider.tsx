@@ -3,6 +3,8 @@ import { authContext } from "@/lib/authContext.ts";
 import { useCookies } from "react-cookie";
 import { jwtDecode } from "jwt-decode";
 import { logout } from "@/requests/logout";
+import { useMutation } from "@tanstack/react-query";
+import { refreshToken } from "@/requests/refreshToken";
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
   const [cookie, setCookie, removeCookie] = useCookies([
@@ -14,6 +16,38 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     setIsLoggedIn(!!cookie.token);
   }, [cookie.token]);
+
+  const { mutate: refreshTokenMutation } = useMutation({
+    mutationKey: ["refreshToken"],
+    mutationFn: async () => {
+      if (!cookie.refreshToken) {
+        throw new Error("No refresh token available");
+      }
+      return await refreshToken(cookie.refreshToken);
+    },
+    onSuccess: (data) => {
+      setCookiesForAuthToken(data.token, data.refreshToken);
+    },
+    onError: (error) => {
+      console.error("Failed to refresh token:", error);
+      logout(cookie.token);
+    },
+  });
+
+  useEffect(() => {
+    const decodedToken: { exp: number } = jwtDecode(cookie.token);
+    const expireTime = new Date(decodedToken.exp * 1000);
+
+    const interval = setInterval(
+      () => {
+        if (cookie.refreshToken) {
+          refreshTokenMutation();
+        }
+      },
+      expireTime.getTime() - Date.now() - 60000
+    ); // Refresh 1 minute before token expiration
+    return () => clearInterval(interval);
+  }, [cookie.token, cookie.refreshToken, refreshTokenMutation]);
 
   const handleLogout = async () => {
     try {
