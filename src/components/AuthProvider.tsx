@@ -1,10 +1,30 @@
-import { type ReactNode } from "react";
+import { type ReactNode, useState, useEffect } from "react";
 import { authContext } from "@/lib/authContext.ts";
 import { useCookies } from "react-cookie";
 import { jwtDecode } from "jwt-decode";
+import { logout } from "@/requests/logout";
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
-  const [, setCookie] = useCookies(["token", "refreshToken"]);
+  const [cookie, setCookie, removeCookie] = useCookies([
+    "token",
+    "refreshToken",
+  ]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setIsLoggedIn(!!cookie.token);
+  }, [cookie.token]);
+
+  const handleLogout = async () => {
+    try {
+      await logout(cookie.token);
+    } catch (error) {
+      console.error("Logout failed:", error);
+    } finally {
+      removeCookie("token", { path: "/" });
+      removeCookie("refreshToken", { path: "/" });
+    }
+  };
 
   const setCookiesForAuthToken = (token: string, refreshToken: string) => {
     const decodedToken: { exp: number } = jwtDecode(token);
@@ -20,7 +40,14 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <authContext.Provider value={{ login, setCookiesForAuthToken }}>
+    <authContext.Provider
+      value={{
+        isLoggedIn,
+        login,
+        logout: handleLogout,
+        setCookiesForAuthToken,
+      }}
+    >
       {children}
     </authContext.Provider>
   );
