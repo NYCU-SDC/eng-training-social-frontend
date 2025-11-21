@@ -1,6 +1,6 @@
 export async function logout(token: string): Promise<void> {
   const res = await fetch(
-    `${import.meta.env.VITE_BACKEND_BASE_URL}/api/posts`,
+    `${import.meta.env.VITE_BACKEND_BASE_URL}/api/logout`,
     {
       method: "GET",
       headers: {
