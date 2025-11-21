@@ -6,9 +6,12 @@ import { PlusIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router";
 import { getPosts } from "@/requests/getPosts";
 import { useQuery } from "@tanstack/react-query";
+import { authContext } from "@/lib/authContext";
+import { useContext } from "react";
 
 export default function Home() {
   const navigate = useNavigate();
+  const { isLoggedIn } = useContext(authContext);
 
   const {
     data: posts,
@@ -23,13 +26,15 @@ export default function Home() {
     <div className="main-container">
       <div className="content-scroll">
         <div className="button-container">
-          <Button
-            className="new-post-button"
-            onClick={() => navigate("/post/create")}
-          >
-            <PlusIcon className="md-icon" />
-            <p>New Post</p>
-          </Button>
+          {isLoggedIn && (
+            <Button
+              className="new-post-button"
+              onClick={() => navigate("/post/create")}
+            >
+              <PlusIcon className="md-icon" />
+              <p>New Post</p>
+            </Button>
+          )}
         </div>
         {isLoading ? (
           <p>Loading posts...</p>
