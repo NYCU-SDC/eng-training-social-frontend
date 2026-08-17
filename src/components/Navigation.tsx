@@ -1,12 +1,12 @@
 import "./Navigation.css";
 import {
   HomeIcon as HomeIconOutline,
-  BellIcon as BellIconOutline,
+  // BellIcon as BellIconOutline,
   UserCircleIcon as UserCircleOutline,
 } from "@heroicons/react/24/outline";
 import {
   HomeIcon as HomeIconSolid,
-  BellIcon as BellIconSolid,
+  // BellIcon as BellIconSolid,
   UserCircleIcon as UserCircleSolid,
 } from "@heroicons/react/24/solid";
 import { Link } from "react-router";
@@ -25,11 +25,12 @@ export default function Navigation({
           <HomeIconOutline className="lg-icon" />
         )}
       </Link>
-      {page == "notifications" ? (
+      {/* Notification feature is not implemented */}
+      {/* {page == "notifications" ? (
         <BellIconSolid className="lg-icon" />
       ) : (
         <BellIconOutline className="lg-icon" />
-      )}
+      )} */}
       <Link to="/user/me" className="link">
         {page == "account" ? (
           <UserCircleSolid className="lg-icon" />
