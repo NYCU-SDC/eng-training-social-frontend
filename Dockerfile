@@ -2,10 +2,9 @@ FROM node:23-alpine AS builder
 WORKDIR /app
 
 COPY . .
-RUN npm install -g pnpm && pnpm install
+RUN npm install
 
-
-ARG VITE_BUILD_MODE
+ARG VITE_BUILD_MODE=production
 RUN echo "Building with mode=${VITE_BUILD_MODE}" && \
     npx vite build --mode=$VITE_BUILD_MODE
 
