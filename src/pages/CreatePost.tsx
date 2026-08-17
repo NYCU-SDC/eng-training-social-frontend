@@ -7,7 +7,7 @@ export default function CreatePost() {
   const navigate = useNavigate();
 
   return (
-    <div className="main-container">
+    <div className="create-post-container">
       <div className="create-post-nav">
         <ChevronLeftIcon className="md-icon" onClick={() => navigate("/")} />
         <h1>Create a New Post</h1>
