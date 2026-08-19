@@ -5,16 +5,20 @@ type CreatePostsRequest = {
 
 export async function createPosts(
   newPost: CreatePostsRequest,
-  token: string
+  token?: string
 ): Promise<void> {
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
   const res = await fetch(
     `${import.meta.env.VITE_BACKEND_BASE_URL}/api/posts`,
     {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
+      headers,
       body: JSON.stringify(newPost),
     }
   );

@@ -13,11 +13,6 @@ export default function CreatePost() {
   const [cookie] = useCookies(["token"]);
 
   const handlePublish = async () => {
-    if (!cookie.token) {
-      console.error("User is not authenticated");
-      return;
-    }
-
     try {
       await createPosts({ title, content }, cookie.token);
       navigate("/");
