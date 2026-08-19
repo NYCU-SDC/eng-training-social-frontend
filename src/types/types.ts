@@ -1,3 +1,9 @@
+export type ReactionType = "LIKE" | "DISLIKE" | "NONE";
+
+export type Reaction = {
+  reaction: ReactionType;
+};
+
 export type Post = {
   id: string;
   title: string;
@@ -6,6 +12,7 @@ export type Post = {
   authorName: string;
   createdAt: string;
   updatedAt: string;
+  reactionMe: Reaction;
 };
 
 export type Comment = {
@@ -15,4 +22,5 @@ export type Comment = {
   authorName: string;
   createdAt: string;
   updatedAt: string;
+  reactionMe: Reaction;
 };
