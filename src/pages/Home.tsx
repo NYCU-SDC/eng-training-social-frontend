@@ -6,13 +6,10 @@ import { PlusIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router";
 import { getPosts } from "@/requests/getPosts";
 import { useQuery } from "@tanstack/react-query";
-import { authContext } from "@/lib/authContext";
-import { useContext } from "react";
 import { useCookies } from "react-cookie";
 
 export default function Home() {
   const navigate = useNavigate();
-  const { isLoggedIn } = useContext(authContext);
   const [cookies] = useCookies(["token"]);
 
   const {
@@ -28,15 +25,13 @@ export default function Home() {
     <div className="main-container">
       <div className="content-scroll">
         <div className="button-container">
-          {isLoggedIn && (
-            <Button
-              className="new-post-button"
-              onClick={() => navigate("/post/create")}
-            >
-              <PlusIcon className="md-icon" />
-              <p>New Post</p>
-            </Button>
-          )}
+          <Button
+            className="new-post-button"
+            onClick={() => navigate("/post/create")}
+          >
+            <PlusIcon className="md-icon" />
+            <p>New Post</p>
+          </Button>
         </div>
         {isLoading ? (
           <p>Loading posts...</p>
