@@ -1,14 +1,19 @@
 import type { Reaction, ReactionType } from "@/types/types.ts";
+import { authHeaders } from "@/lib/authHeaders.ts";
 
 export async function reactToPost(
   postId: string,
-  reaction: ReactionType
+  reaction: ReactionType,
+  token?: string
 ): Promise<Reaction> {
   const res = await fetch(
     `${import.meta.env.VITE_BACKEND_BASE_URL}/api/post/${postId}/react`,
     {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        ...authHeaders(token),
+      },
       body: JSON.stringify({ reaction }),
     }
   );

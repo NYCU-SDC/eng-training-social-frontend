@@ -1,14 +1,19 @@
 import type { Comment } from "@/types/types.ts";
+import { authHeaders } from "@/lib/authHeaders.ts";
 
 export async function createComment(
   postId: string,
-  content: string
+  content: string,
+  token?: string
 ): Promise<Comment> {
   const res = await fetch(
     `${import.meta.env.VITE_BACKEND_BASE_URL}/api/post/${postId}/comments`,
     {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        ...authHeaders(token),
+      },
       body: JSON.stringify({ content }),
     }
   );

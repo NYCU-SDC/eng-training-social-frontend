@@ -8,18 +8,20 @@ import { getPosts } from "@/requests/getPosts";
 import { useQuery } from "@tanstack/react-query";
 import { authContext } from "@/lib/authContext";
 import { useContext } from "react";
+import { useCookies } from "react-cookie";
 
 export default function Home() {
   const navigate = useNavigate();
   const { isLoggedIn } = useContext(authContext);
+  const [cookies] = useCookies(["token"]);
 
   const {
     data: posts,
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["posts"],
-    queryFn: getPosts,
+    queryKey: ["posts", cookies.token],
+    queryFn: () => getPosts(cookies.token),
   });
 
   return (

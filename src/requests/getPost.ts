@@ -1,10 +1,12 @@
 import type { Post } from "@/types/types.ts";
+import { authHeaders } from "@/lib/authHeaders.ts";
 
-export async function getPost(postId: string): Promise<Post> {
+export async function getPost(postId: string, token?: string): Promise<Post> {
   const res = await fetch(
     `${import.meta.env.VITE_BACKEND_BASE_URL}/api/post/${postId}`,
     {
       method: "GET",
+      headers: authHeaders(token),
     }
   );
 

@@ -12,11 +12,13 @@ import { getCommentsByPostId } from "@/requests/getCommentByPost";
 import { createComment } from "@/requests/createComment";
 import type { Comment } from "@/types/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useCookies } from "react-cookie";
 
 export default function Post() {
   const navigate = useNavigate();
   const { id } = useParams();
   const queryClient = useQueryClient();
+  const [cookies] = useCookies(["token"]);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [commentContent, setCommentContent] = useState("");
@@ -26,8 +28,8 @@ export default function Post() {
     isLoading: isPostLoading,
     isError: isPostError,
   } = useQuery({
-    queryKey: ["post", id],
-    queryFn: () => getPost(id!),
+    queryKey: ["post", id, cookies.token],
+    queryFn: () => getPost(id!, cookies.token),
   });
 
   const {
@@ -35,16 +37,18 @@ export default function Post() {
     isLoading: isCommentsLoading,
     isError: isCommentsError,
   } = useQuery({
-    queryKey: ["comments", id],
-    queryFn: () => getCommentsByPostId(id!),
+    queryKey: ["comments", id, cookies.token],
+    queryFn: () => getCommentsByPostId(id!, cookies.token),
   });
 
   const { mutate: submitComment, isPending: isSubmittingComment } =
     useMutation({
-      mutationFn: (content: string) => createComment(id!, content),
+      mutationFn: (content: string) =>
+        createComment(id!, content, cookies.token),
       onSuccess: (newComment) => {
-        queryClient.setQueryData<Comment[]>(["comments", id], (old) =>
-          old ? [...old, newComment] : [newComment]
+        queryClient.setQueryData<Comment[]>(
+          ["comments", id, cookies.token],
+          (old) => (old ? [...old, newComment] : [newComment])
         );
         setCommentContent("");
         if (textareaRef.current) {

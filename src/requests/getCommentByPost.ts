@@ -1,10 +1,15 @@
 import { type Comment } from "@/types/types.ts";
+import { authHeaders } from "@/lib/authHeaders.ts";
 
-export async function getCommentsByPostId(id: string): Promise<Comment[]> {
+export async function getCommentsByPostId(
+  id: string,
+  token?: string
+): Promise<Comment[]> {
   const res = await fetch(
     `${import.meta.env.VITE_BACKEND_BASE_URL}/api/post/${id}/comments`,
     {
       method: "GET",
+      headers: authHeaders(token),
     }
   );
 

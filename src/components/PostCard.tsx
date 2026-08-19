@@ -13,6 +13,7 @@ import { type Post, type ReactionType } from "@/types/types";
 import { Link } from "react-router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { reactToPost } from "@/requests/reactToPost";
+import { useCookies } from "react-cookie";
 
 export default function PostCard({
   post,
@@ -22,30 +23,43 @@ export default function PostCard({
   showCommentsIcon?: boolean;
 }) {
   const queryClient = useQueryClient();
+  const [cookies] = useCookies(["token"]);
 
   const { mutate: react } = useMutation({
-    mutationFn: (reaction: ReactionType) => reactToPost(post.id, reaction),
+    mutationFn: (reaction: ReactionType) =>
+      reactToPost(post.id, reaction, cookies.token),
     onMutate: async (reaction) => {
-      const previousPosts = queryClient.getQueryData<Post[]>(["posts"]);
-      const previousPost = queryClient.getQueryData<Post>(["post", post.id]);
+      const previousPosts = queryClient.getQueryData<Post[]>([
+        "posts",
+        cookies.token,
+      ]);
+      const previousPost = queryClient.getQueryData<Post>([
+        "post",
+        post.id,
+        cookies.token,
+      ]);
 
-      queryClient.setQueryData<Post[]>(["posts"], (old) =>
+      queryClient.setQueryData<Post[]>(["posts", cookies.token], (old) =>
         old?.map((p) =>
           p.id === post.id ? { ...p, reactionMe: { reaction } } : p
         )
       );
-      queryClient.setQueryData<Post>(["post", post.id], (old) =>
-        old ? { ...old, reactionMe: { reaction } } : old
+      queryClient.setQueryData<Post>(
+        ["post", post.id, cookies.token],
+        (old) => (old ? { ...old, reactionMe: { reaction } } : old)
       );
 
       return { previousPosts, previousPost };
     },
     onError: (_err, _reaction, context) => {
       if (context?.previousPosts) {
-        queryClient.setQueryData(["posts"], context.previousPosts);
+        queryClient.setQueryData(["posts", cookies.token], context.previousPosts);
       }
       if (context?.previousPost) {
-        queryClient.setQueryData(["post", post.id], context.previousPost);
+        queryClient.setQueryData(
+          ["post", post.id, cookies.token],
+          context.previousPost
+        );
       }
     },
   });

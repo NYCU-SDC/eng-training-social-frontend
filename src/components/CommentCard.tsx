@@ -11,6 +11,7 @@ import {
 import type { Comment, ReactionType } from "@/types/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { reactToComment } from "@/requests/reactToComment";
+import { useCookies } from "react-cookie";
 
 export default function CommentCard({
   comment,
@@ -20,27 +21,34 @@ export default function CommentCard({
   postId: string;
 }) {
   const queryClient = useQueryClient();
+  const [cookies] = useCookies(["token"]);
 
   const { mutate: react } = useMutation({
     mutationFn: (reaction: ReactionType) =>
-      reactToComment(comment.id, reaction),
+      reactToComment(comment.id, reaction, cookies.token),
     onMutate: async (reaction) => {
       const previousComments = queryClient.getQueryData<Comment[]>([
         "comments",
         postId,
+        cookies.token,
       ]);
 
-      queryClient.setQueryData<Comment[]>(["comments", postId], (old) =>
-        old?.map((c) =>
-          c.id === comment.id ? { ...c, reactionMe: { reaction } } : c
-        )
+      queryClient.setQueryData<Comment[]>(
+        ["comments", postId, cookies.token],
+        (old) =>
+          old?.map((c) =>
+            c.id === comment.id ? { ...c, reactionMe: { reaction } } : c
+          )
       );
 
       return { previousComments };
     },
     onError: (_err, _reaction, context) => {
       if (context?.previousComments) {
-        queryClient.setQueryData(["comments", postId], context.previousComments);
+        queryClient.setQueryData(
+          ["comments", postId, cookies.token],
+          context.previousComments
+        );
       }
     },
   });
